@@ -27,7 +27,7 @@ int solution(int n, vector<int> weak, vector<int> dist) {
                     count++;
                     if(count >dist.size())
                         break;
-                    pos += weak[j] + dist[count - 1];
+                    pos = weak[j] + dist[count - 1];
                 }
             }
             answer = min(answer,count);
