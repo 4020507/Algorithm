@@ -24,7 +24,7 @@ int main(void)
 
     if (a < b)
         swap(a, b);
-    return(gcd(a, b));
+    cout<<gcd(a, b);
     
     return 0;
 
