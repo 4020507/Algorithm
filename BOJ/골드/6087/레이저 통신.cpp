@@ -11,7 +11,7 @@ using namespace std;
 
 char map[100][100];
 int W, H;
-int dist[100][100];
+int dist[100][100][4];
 int startX, startY, endX, endY;
 
 int dx[4] = { 0 ,0,1,-1 };
@@ -26,12 +26,12 @@ void bfs() {
 	int i;
 
 	for (int i = 0; i < 4; i++) {
-		q.push({{ startX,startY }, { 0,i }});
+		q.push({ { startX,startY }, { 0,i } });
+		dist[startX][startY][i] = 0;
 	}
 
 	int x, y, mirrors, dir;
 	int nx, ny;
-	dist[startX][startY] = 0;
 
 	while (!q.empty()) {
 		x = q.front().first.first;
@@ -52,15 +52,15 @@ void bfs() {
 				if (map[nx][ny] != '*') {
 
 					if (i != dir) {
-						if (dist[nx][ny] >= mirrors + 1) {
-							dist[nx][ny] = mirrors + 1;
-							q.push({ {nx,ny},{dist[nx][ny],i} });
+						if (dist[nx][ny][i] > mirrors + 1) {
+							dist[nx][ny][i] = mirrors + 1;
+							q.push({ {nx,ny},{dist[nx][ny][i],i}});
 						}
 					}
 					else {
-						if (dist[nx][ny] >= mirrors) {
-							dist[nx][ny] = mirrors;
-							q.push({ {nx,ny},{dist[nx][ny],i} });
+						if (dist[nx][ny][i] > mirrors) {
+							dist[nx][ny][i] = mirrors;
+							q.push({ {nx,ny},{dist[nx][ny][i],i}});
 						}
 					}
 				}
@@ -90,14 +90,17 @@ int main(int argc, char** argv)
 				endY = j;
 			}
 
-			dist[i][j] = INF;
+			dist[i][j][0] = INF;
+			dist[i][j][1] = INF;
+			dist[i][j][2] = INF;
+			dist[i][j][3] = INF;
 		}
 	}
 
 
 	bfs();
 
-	cout << dist[endX][endY];
+	cout << min(dist[endX][endY][0],min(dist[endX][endY][1],min(dist[endX][endY][2],dist[endX][endY][3])));
 
 	return 0;
 }
