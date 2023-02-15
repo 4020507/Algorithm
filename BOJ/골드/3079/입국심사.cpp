@@ -3,8 +3,8 @@
 #include <algorithm>
 using namespace std;
 
-long long N, M;
-long long test[100000];
+unsigned long long N, M;
+unsigned long long test[100000];
 
 int main(void)
 {
@@ -19,11 +19,11 @@ int main(void)
     sort(test, test + N);
 
     
-    long long left = 1;
-    long long right = test[N - 1] * M;
-    long long ans = right;
-    long long mid;
-    long long sum = 0;
+    unsigned long long left = 1;
+    unsigned long long right = test[N - 1] * M;
+    unsigned long long ans = right;
+    unsigned long long mid;
+    unsigned long long sum = 0;
     while (left <= right) {
         mid = (left + right) / 2;
 
@@ -36,7 +36,7 @@ int main(void)
             left = mid + 1;
         }
         else {
-            ans = mid;
+            ans = min(mid,ans);
             right = mid - 1;
         }
     }
